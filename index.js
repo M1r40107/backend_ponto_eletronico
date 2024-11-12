@@ -15,12 +15,6 @@ sequelize.sync({ alter: true })
     console.log("Erro!");
 });
 
-
-
-
-
-
-
 // ROTAS
 app.get('/', (req, res) => {
     res.send("Chamada ao recurso realizada com sucesso");
