@@ -1,27 +1,45 @@
-let express = require('express');
-let app = express();
+const express = require('express');
+const app = express();
+const PORT = 3000;
 
-app.get('/abc', (req, res) => {
+const sequelize = require('./config/db');
+const Usuario = require('./models/usuario');
+const Ponto = require('./models/ponto');
+
+
+sequelize.sync({ alter: true })
+.then(() => {
+    console.log("BD sincronizado");
+})
+.catch(error => {
+    console.log("Erro!");
+});
+
+
+
+
+
+
+
+// ROTAS
+app.get('/', (req, res) => {
     res.send("Chamada ao recurso realizada com sucesso");
 });
 
-//retornar todos os usuários
+// retornar todos os usuários
 app.get('/users', (req, res) => {
-    res.send("Usuários do sistema");
+    res.send("Aqui vou retornar todos os usuários do sistema")
 });
 
-app.get('/user:id', (req, res) => {
-    console.log(req);
-});
-
-app.listen(3000, () => {
-    console.log("Servidor aguardando requisições");
-});
-
-app.get('/', (req, res) => {
-    res.send("Chamada ao recurso get realizada");
+app.get('/user/:id', (req, res) => {
+    res.send(req.params.id)
 });
 
 app.post('/rotapost', (req, res) => {
-    res.send("Chamada ao recurso post realizada");
+    res.send("Chamada ao recurso usando o post realizada com sucesso");
+});
+
+
+app.listen(PORT, () => {
+    console.log("Servidor aguardando requisições");
 });
